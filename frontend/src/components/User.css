@@ -1,0 +1,60 @@
+.page_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: .5em;
+}
+
+.form_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form_container form {
+  width: fit-content;
+  height: 2.5em;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form_container form input {
+  border: none;
+  height: 100%;
+  text-indent: 1em;
+  width: 15em;
+  border-radius: 2em;
+}
+
+.form_container form input:focus {
+  outline: none;
+}
+
+.form_container form button {
+  position: absolute;
+  height: 100%;
+  width: 10%;
+  right: 0;
+  border-radius: 2em;
+  outline: 0.2em solid #242424;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 1.5em;
+    /* outline: 1px solid wheat; */
+    filter: invert();
+    transition: transform 0.3s ease-in-out;
+  }
+}
+
+.form_container form button:hover {
+  img {
+    transform: translateX(0.1em);
+  }
+}
