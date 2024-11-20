@@ -1,16 +1,35 @@
 import "./User.css";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setReduxUser } from "../state_management/stateSlice";
 import { MyContext } from "./Context";
 
 export default function User() {
   const { user, setUser } = useContext(MyContext);
+  const [userRedux, setUserRedux] = useState("");
+  const dispatch = useDispatch();
+  const useRedux = useSelector((state) => state.state.useRedux);
   const navigate = useNavigate();
+
 
   const handleSudmit = (e) => {
     e.preventDefault();
+    dispatch(setReduxUser({ user: userRedux }));
     navigate("/counter");
   };
+
+  const handleChange = (e) => {
+    if (useRedux === "true") {
+      setUserRedux(e.target.value);
+    } else {
+      setUser(e.target.value);
+    }
+  };
+
+  if (!useRedux) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <>
@@ -22,8 +41,8 @@ export default function User() {
               type="text"
               placeholder="enter username"
               required={true}
-              value={user}
-              onChange={(e) => setUser(e.target.value)}
+              value={useRedux === "true" ? userRedux : user}
+              onChange={handleChange}
             />
             <button type="sudmit">
               <img src="https://static.thenounproject.com/png/114836-200.png" />
