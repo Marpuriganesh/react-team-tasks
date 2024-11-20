@@ -7,10 +7,11 @@ import "./Counter.css";
 
 const Counter = ({ user }) => {
   const [count, setCount] = useState(0);
+  const [showFromDB, setShowFromDB] = useState(false);
   const reduxUser = useSelector((state) => state.state.user);
   const useRedux = useSelector((state) => state.state.useRedux);
   if (!user) {
-    console.log(reduxUser,useRedux)
+    console.log(reduxUser, useRedux);
     return <Navigate to="/" />;
   }
   const uppercaseName = user.toUpperCase();
@@ -26,6 +27,47 @@ const Counter = ({ user }) => {
             <button onClick={() => setCount((v) => v - 1)}>{"<"}</button>
             <button onClick={() => setCount((v) => v + 1)}>{">"}</button>
           </div>
+          <div className="save_show">
+            <span>
+              <img
+                src="https://www.svgrepo.com/show/309930/save.svg"
+                alt="save"
+              />
+            </span>
+            <span onClick={() => setShowFromDB((preValue) => !preValue)}>
+              <img
+                src="https://www.svgrepo.com/show/309610/eye-show.svg"
+                alt="show"
+              />
+            </span>
+          </div>
+          {showFromDB && (
+            <div className="table_content">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Number</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Alice</td>
+                    <td>25</td>
+                  </tr>
+                  <tr>
+                    <td>Bob</td>
+                    <td>30</td>
+                  </tr>
+                  <tr>
+                    <td>Bob</td>
+                    <td>30</td>
+                  </tr>
+                 
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </>

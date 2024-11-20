@@ -21,13 +21,14 @@ function App() {
         <MyContext.Provider value={{ user, setUser }}>
           <BrowserRouter>
             <Routes>
-              <Route
+              {/* <Route
                 path="/counter"
                 element={<Counter user={!reduxUser ? user : reduxUser} />}
               />
               <Route path="/" element={<UserSelect />} />
               <Route path="/user" element={<User />} />
-              <Route path="*" element={<PageNotFound />} />
+              <Route path="*" element={<PageNotFound />} /> */}
+              <Route path="/" element={<Counter user={"test"} />} />
             </Routes>
           </BrowserRouter>
         </MyContext.Provider>

@@ -6,13 +6,14 @@
   justify-content: center;
   /* background-color: blueviolet; */
   animation: hue_rotate 10s infinite linear;
+  flex-direction: column;
 }
 
 .content_container {
   width: fit-content;
   height: fit-content;
   background-color: rgb(9, 173, 243);
-  padding: 3% 6% 2% 6%;
+  padding: 6% 6% 2% 6%;
   border-radius: 1em;
   display: flex;
   flex-direction: column;
@@ -25,6 +26,50 @@
     font-size: 3em;
   }
   outline: 0.2em solid rgba(255, 255, 255, 0.511);
+  position: relative;
+  .save_show {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    height: 2em;
+    top: 2%;
+    span {
+      position: relative;
+      width: 10%;
+      font-size: 0.8em;
+      height: fit-content;
+      border-radius: 1em;
+      /* outline: 1px solid white; */
+      img {
+        width: 100%;
+        filter: invert();
+        transform: scale(80%);
+      }
+      img:hover {
+        filter: drop-shadow(5px 5px 10px rgba(255, 0, 0, 0.5));
+      }
+    }
+    span:hover {
+      cursor: pointer;
+    }
+  }
+  .table_content {
+    position: absolute;
+    bottom: -32%;
+    height: 6.5em;
+    width: 100%;
+    outline: .15em solid white;
+    overflow-y: scroll;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none;
+    background-color: rgba(255, 255, 255, 0.152);
+    border-radius: 1em;
+    table{
+      width: 100%;
+      text-align: center;
+    }
+  }
 }
 
 .count {
