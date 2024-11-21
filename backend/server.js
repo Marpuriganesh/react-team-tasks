@@ -19,6 +19,12 @@ const pool = mysql.createPool({
   database: process.env.DB_DATABASE,
 });
 
+//logging middleware
+app.use((req, res, next) => {
+  console.log("request ip:", req.ip);
+  next();
+});
+
 app.get("/values", async (req, res) => {
   console.log("sending data to client:");
   try {
