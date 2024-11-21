@@ -59,13 +59,13 @@
     bottom: -32%;
     height: 6.5em;
     width: 100%;
-    outline: .15em solid white;
+    outline: 0.15em solid white;
     overflow-y: scroll;
     scrollbar-width: none; /* For Firefox */
     -ms-overflow-style: none;
     background-color: rgba(255, 255, 255, 0.152);
     border-radius: 1em;
-    table{
+    table {
       width: 100%;
       text-align: center;
     }

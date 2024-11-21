@@ -1,6 +1,6 @@
 // import {useState} from "react";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./Counter.css";
@@ -10,11 +10,68 @@ const Counter = ({ user }) => {
   const [showFromDB, setShowFromDB] = useState(false);
   const reduxUser = useSelector((state) => state.state.user);
   const useRedux = useSelector((state) => state.state.useRedux);
+  const [FatchedUserData, setFatchedUserData] = useState([]);
+
+  useEffect(() => {
+    if (showFromDB) {
+      const fetchData = async () => {
+        try {
+          const res = await fetch("http://localhost:3000/values");
+          const data = await res.json();
+          setFatchedUserData(data);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      // fetch("http://localhost:3000/values")
+      //   .then((res) => res.json())
+      //   .then((data) => console.log(data));
+
+      fetchData();
+    }
+  }, [showFromDB]);
+
+  const uppercaseName = user.toUpperCase();
+  const [userData, setUserData] = useState({
+    username: uppercaseName,
+    value: "",
+  });
+
+  useEffect(() => {
+    setUserData((prevData) => ({
+      ...prevData,
+      value: count,
+    }));
+  }, [count]);
+
   if (!user) {
     console.log(reduxUser, useRedux);
     return <Navigate to="/" />;
   }
-  const uppercaseName = user.toUpperCase();
+
+  const saveData = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/insert_values", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        console.log("Data sent successfully!");
+
+        // Handle success, e.g., show a success message
+      } else {
+        console.error("Error sending data:", response.statusText);
+        // Handle error, e.g., show an error message
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <>
@@ -28,7 +85,7 @@ const Counter = ({ user }) => {
             <button onClick={() => setCount((v) => v + 1)}>{">"}</button>
           </div>
           <div className="save_show">
-            <span>
+            <span onClick={saveData}>
               <img
                 src="https://www.svgrepo.com/show/309930/save.svg"
                 alt="save"
@@ -51,19 +108,12 @@ const Counter = ({ user }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Alice</td>
-                    <td>25</td>
-                  </tr>
-                  <tr>
-                    <td>Bob</td>
-                    <td>30</td>
-                  </tr>
-                  <tr>
-                    <td>Bob</td>
-                    <td>30</td>
-                  </tr>
-                 
+                  {FatchedUserData.map((user) => (
+                    <tr key={user.id}>
+                      <td>{user.username}</td>
+                      <td>{user.value}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
